@@ -10,7 +10,7 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Test') {
             agent {
                 docker {
                     image 'python:3.11-slim'
@@ -19,20 +19,8 @@ pipeline {
                 }
             }
             steps {
-                echo 'Installing Python dependencies...'
+                echo 'Installing dependencies...'
                 sh 'pip3 install -r requirements.txt'
-            }
-        }
-
-        stage('Run Tests') {
-            agent {
-                docker {
-                    image 'python:3.11-slim'
-                    args '-u root'
-                    reuseNode true
-                }
-            }
-            steps {
                 echo 'Running tests...'
                 sh 'pytest test_app.py -v'
             }
